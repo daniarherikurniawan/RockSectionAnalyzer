@@ -1,0 +1,4 @@
+Nama File gambar = asec3.jpg
+1.   7.12 %
+4.   3.5 %
+Total persentase = 10.61 %

@@ -1,0 +1,5 @@
+Nama File gambar = a1.png
+1.   50.91 %
+2.   29.24 %
+3.   3.38 %
+Total persentase = 83.53 %

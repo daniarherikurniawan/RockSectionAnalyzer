@@ -1,0 +1,4 @@
+MouseCursorXYLabel$2
+MouseCursorXYLabel$1
+AlsXYMouseLabelComponent
+MouseCursorXYLabel

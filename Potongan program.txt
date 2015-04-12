@@ -1,0 +1,59 @@
+    // Prosedur berikut adalah prosedur yang membetuhkan input berupa koordinat gambar
+    // Proses yang dilakukan adalah melakukan pencarian pixel disekitarnya yang nilai RGBnya mirip
+    // lebar adalah variabel yang menyimpan koordinat x
+    // tinggi adalah variabel yang menyimpan koordinat y
+   public void MagicWand(int lebar, int tinggi) {
+
+        // NoMagic adalah nilai yang menunjukkan urutan "klik" pada gambar. Setiap saat program akan 
+        // menyimpan kondisi gambar yang ada. Sehingga nanti bisa dilakukan undo ketika user melakukan kesalahan.
+        ImgRepresentation.elementAt(NoMagic).CurrentPackInt
+                = ImgRepresentation.elementAt(NoMagic).CurrentImage.getRGB(lebar, tinggi);
+        ImagePixel Pixel = new ImagePixel(lebar, tinggi);
+
+        // Proses penyimpanan pixel yang sedang diproses pada sebuah stack agar bisa di iterasi
+        myStack.add(Pixel);
+        while (!myStack.empty()) {
+            Pixel = myStack.pop();
+
+            // Prosedur untuk melakukan rekursif berdasarkan kondisi stack
+            MagicTool(Pixel.lebar, Pixel.tinggi);
+        }
+    }
+
+    
+
+    // Prosedur yang menerima input sebuah pixel awal lalu mengecek ke 4 arah mata angin dari pixel acuan 
+    // untuk mengetahui pixel mana yang RGBnya mirip dengan pixel acuan.
+    // Prosedur ini lebih mengatur proses pencocokan berbagai keadaan agar hasilnya valid, 
+    // sedangkan prosedur MagicWand mengatur keberjalanan rekursifnya.
+    public void MagicTool(int lebar, int tinggi) {
+        OriginalImageLabel.repaint();
+        if (tinggi >= 0 && tinggi < heightImage
+                && lebar >= 0 && lebar < widthImage && !IsCheckedBefore(lebar, tinggi)
+                && IsRelated(lebar, tinggi)) {
+
+            ImgRepresentation.elementAt(NoMagic).CurrentArea++;
+
+            ImgRepresentation.elementAt(NoMagic).CurrentImage.setRGB(lebar, tinggi, newColor.getRGB());
+            MainFrame.MarkedAllImage.setRGB(lebar, tinggi, newColor.getRGB());
+
+            ImgRepresentation.elementAt(NoMagic).Pixel[lebar][tinggi].Checked = true;
+
+            if (tinggi >= 0 && tinggi < heightImage
+                    && lebar + 1 >= 0 && lebar + 1 < widthImage && !ImgRepresentation.elementAt(NoMagic).Pixel[lebar + 1][tinggi].Checked) {
+                myStack.add(new ImagePixel(lebar + 1, tinggi));
+            }
+            if (tinggi >= 0 && tinggi < heightImage
+                    && lebar - 1 >= 0 && lebar - 1 < widthImage && !ImgRepresentation.elementAt(NoMagic).Pixel[lebar - 1][tinggi].Checked) {
+                myStack.add(new ImagePixel(lebar - 1, tinggi));
+            }
+            if (tinggi + 1 >= 0 && tinggi + 1 < heightImage
+                    && lebar >= 0 && lebar < widthImage && !ImgRepresentation.elementAt(NoMagic).Pixel[lebar][tinggi + 1].Checked) {
+                myStack.add(new ImagePixel(lebar, tinggi + 1));
+            }
+            if (tinggi - 1 >= 0 && tinggi - 1 < heightImage
+                    && lebar >= 0 && lebar < widthImage && !ImgRepresentation.elementAt(NoMagic).Pixel[lebar][tinggi - 1].Checked) {
+                myStack.add(new ImagePixel(lebar, tinggi - 1));
+            }
+        }
+    }
